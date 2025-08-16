@@ -11,9 +11,9 @@ Anyone who wants structured feedback on resumes or interview answers without rel
 💡 **What does it solve?**
 
 Our tool is built with three simple but impactful use cases:
-1️⃣ Resume Module → Upload your Job Description + Resume → get an ATS score, missing skills/keywords, phrasing/formatting suggestions, and benchmarking vs successful PM resumes.
-2️⃣ Interview Prep Module → Input a question, practice your answer, get AI feedback with role-level scoring, and also see ideal answers/frameworks across levels (Fresher → Director).
-3️⃣ Mock Interview (Lite) → Chat with an AI interviewer that asks follow-ups like in real interviews, and get a performance report (positives + improvement areas).
+1️. Resume Module → Upload your Job Description + Resume → get an ATS score, missing skills/keywords, phrasing/formatting suggestions, and benchmarking vs successful PM resumes.
+2. Interview Prep Module → Input a question, practice your answer, get AI feedback with role-level scoring, and also see ideal answers/frameworks across levels (Fresher → Director).
+3. Mock Interview (Lite) → Chat with an AI interviewer that asks follow-ups like in real interviews, and get a performance report (positives + improvement areas).
 
 🌍 **Why I built this?**
 I’ve been fortunate in my career, and I want to give back to the community. Preparing for PM interviews can be stressful, expensive, and often inaccessible.
