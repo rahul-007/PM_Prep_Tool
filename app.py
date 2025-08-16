@@ -46,26 +46,59 @@ if module == "Resume Module":
 
     if st.button("Analyze Resume"):
         if jd and resume:
-            prompt = f"""
-            You are an expert resume reviewer and ATS analyzer.
-            Compare this resume with the job description.
-            Provide:
-            1. ATS Score (0-100).
-            2. Missing keywords/skills.
-            3. Suggestions to improve phrasing, formatting, or structure.
-            4. Benchmarking insights vs successful PM resumes.
-            
-            Job Description:
-            {jd}
+            with st.spinner("🔍 Summarizing Job Description..."):
+                jd_summary_prompt = f"""
+                Summarize the following Job Description into max 500 words.
+                Focus ONLY on:
+                - Role responsibilities
+                - Required hard skills
+                - Tools/technologies
+                - Soft skills / behavioral traits
 
-            Resume:
-            {resume}
-            """
-            with st.spinner("Analyzing resume... 🔎"):
-                response = llm.invoke(prompt)
-            st.write(response.content)
+                Job Description:
+                {jd}
+                """
+                jd_summary = llm.invoke(jd_summary_prompt).content
+
+            with st.spinner("📝 Extracting Resume Key Elements..."):
+                resume_extract_prompt = f"""
+                Extract structured key elements from this resume:
+                - Core skills (list)
+                - Key achievements (with metrics if available)
+                - Tools/technologies used
+                - Certifications (if any)
+
+                Resume:
+                {resume}
+                """
+                resume_extract = llm.invoke(resume_extract_prompt).content
+
+            with st.spinner("⚖️ Evaluating ATS Score..."):
+                ats_prompt = f"""
+                You are an expert ATS evaluator for Product Management roles.
+
+                Compare the summarized JD and extracted Resume details.
+
+                Job Description (summary):
+                {jd_summary}
+
+                Resume (extracted):
+                {resume_extract}
+
+                Provide:
+                1. ATS Score (0–100).
+                2. Missing keywords/skills.
+                3. Suggestions to improve phrasing, formatting, or structure.
+                4. Benchmark insights vs successful PM resumes.
+                """
+                evaluation = llm.invoke(ats_prompt).content
+
+            st.subheader("📊 ATS Evaluation Report")
+            st.write(evaluation)
+
         else:
             st.warning("Please provide both Job Description and Resume.")
+
 
 # ==============================
 # 2. Interview Prep Module
@@ -215,4 +248,5 @@ elif module == "Mock Interview":
             report = llm.invoke(report_prompt)
         st.subheader("📊 Final Evaluation Report")
         st.write(report.content)
+
 
