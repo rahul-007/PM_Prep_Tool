@@ -126,7 +126,10 @@ elif module == "Interview Prep Module":
                    - Director
                 2. Score (0-10) at each level.
                 3. Provide detailed feedback.
-                4. Share ideal answer using frameworks (STAR, CIRCLES, AARM, etc.) for each role-level.
+                4. Share ideal answer using frameworks (STAR, CIRCLES, AARM, etc.) for each role-level as mentioned below:
+                   - STAR: Situation, Task, Action and Result
+                   - CIRCLES: Comprehend the situation, Identify the Customer, Report customer needs, cut through prioritization, list solutions, evaluate tradeoff, summarize recommendations.
+                   - AARM: Acquisition, Activation, Retention and Monetization.
                 """
                 with st.spinner("Evaluating your answer... 📝"):
                     response = llm.invoke(prompt)
@@ -148,7 +151,10 @@ elif module == "Interview Prep Module":
                 - Sr. PM
                 - Director
 
-                Use structured frameworks (STAR, CIRCLES, AARM, etc.) 
+                Use structured frameworks (STAR, CIRCLES, AARM, etc.) as mentioned below:
+                   - STAR: Situation, Task, Action and Result
+                   - CIRCLES: Comprehend the situation, Identify the Customer, Report customer needs, cut through prioritization, list solutions, evaluate tradeoff, summarize recommendations.
+                   - AARM: Acquisition, Activation, Retention and Monetization.
                 and explain why the focus areas differ at each level.
                 """
                 with st.spinner("Fetching ideal answers... 💡"):
@@ -245,6 +251,7 @@ elif module == "Mock Interview":
             report = llm.invoke(report_prompt)
         st.subheader("📊 Final Evaluation Report")
         st.write(report.content)
+
 
 
 
