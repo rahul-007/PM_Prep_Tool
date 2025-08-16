@@ -3,19 +3,16 @@ import streamlit as st
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage
+from langchain_groq import ChatGroq
 
 # ==============================
 # API Key Config
 # ==============================
-GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY")
+groq_api_key = st.secrets["GROQ_API_KEY"]
 LANGSMITH_API_KEY = st.secrets.get("LANGSMITH_API_KEY")
 
 # Initialize LLM
-llm = ChatGoogleGenerativeAI(
-    model="gemini-1.5-pro",
-    google_api_key=GEMINI_API_KEY,
-    temperature=0.7
-)
+llm = ChatGroq(model="Llama3-70b-8192",groq_api_key=groq_api_key)
 
 # LangSmith Monitoring Setup
 if LANGSMITH_API_KEY:
@@ -248,5 +245,6 @@ elif module == "Mock Interview":
             report = llm.invoke(report_prompt)
         st.subheader("📊 Final Evaluation Report")
         st.write(report.content)
+
 
 
