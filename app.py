@@ -7,8 +7,8 @@ from langchain_core.messages import HumanMessage, AIMessage
 # ==============================
 # API Key Config
 # ==============================
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", st.secrets.get("GEMINI_API_KEY", ""))
-LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY", st.secrets.get("LANGSMITH_API_KEY", ""))
+GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY")
+LANGSMITH_API_KEY = st.secrets.get("LANGSMITH_API_KEY")
 
 # Initialize LLM
 llm = ChatGoogleGenerativeAI(
@@ -215,3 +215,4 @@ elif module == "Mock Interview":
             report = llm.invoke(report_prompt)
         st.subheader("📊 Final Evaluation Report")
         st.write(report.content)
+
