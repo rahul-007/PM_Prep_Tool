@@ -16,7 +16,7 @@ Our tool is built with three simple but impactful use cases:
 3. Mock Interview (Lite) → Chat with an AI interviewer that asks follow-ups like in real interviews, and get a performance report (positives + improvement areas).
 
 🌍 **Why I built this?**
-I’ve been fortunate in my career, and I want to give back to the community. Preparing for PM interviews can be stressful, expensive, and often inaccessible.
+I want to give back to the community. Preparing for PM interviews can be stressful, expensive, and often inaccessible.
 So I’ve open-sourced the app + codebase so anyone can use, improve, and build on top of it.
 
 👉 **Try the app here**: https://pmpreptool-4udmmdmxcebfx6yn7nh9hs.streamlit.app/
