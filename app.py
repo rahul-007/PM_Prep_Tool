@@ -3,18 +3,16 @@ import streamlit as st
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage, AIMessage
-from langchain.callbacks import LangChainTracer
 
 # ==============================
 # API Key Config
 # ==============================
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", st.secrets.get("GEMINI_API_KEY", ""))
+LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY", st.secrets.get("LANGSMITH_API_KEY", ""))
 
-GEMINI_API_KEY = st.secrets.get("GEMINI_API_KEY")
-LANGSMITH_API_KEY = st.secrets.get("LANGSMITH_API_KEY")
-
-# Initialize LLM with LangSmith monitoring
+# Initialize LLM
 llm = ChatGoogleGenerativeAI(
-    model="gemini-2.0-flash",
+    model="gemini-1.5-pro",
     google_api_key=GEMINI_API_KEY,
     temperature=0.7
 )
@@ -23,6 +21,7 @@ llm = ChatGoogleGenerativeAI(
 if LANGSMITH_API_KEY:
     os.environ["LANGSMITH_API_KEY"] = LANGSMITH_API_KEY
     os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_PROJECT"] = "PM Job Prep Assistant"
 
 # ==============================
 # Streamlit UI
@@ -62,7 +61,8 @@ if module == "Resume Module":
             Resume:
             {resume}
             """
-            response = llm.invoke(prompt)
+            with st.spinner("Analyzing resume... 🔎"):
+                response = llm.invoke(prompt)
             st.write(response.content)
         else:
             st.warning("Please provide both Job Description and Resume.")
@@ -98,7 +98,8 @@ elif module == "Interview Prep Module":
                 3. Provide detailed feedback.
                 4. Share ideal answer using frameworks (STAR, CIRCLES, AARM, etc.) for each role-level.
                 """
-                response = llm.invoke(prompt)
+                with st.spinner("Evaluating your answer... 📝"):
+                    response = llm.invoke(prompt)
                 st.write(response.content)
             else:
                 st.warning("Please provide both question and answer.")
@@ -120,7 +121,8 @@ elif module == "Interview Prep Module":
                 Use structured frameworks (STAR, CIRCLES, AARM, etc.) 
                 and explain why the focus areas differ at each level.
                 """
-                response = llm.invoke(prompt)
+                with st.spinner("Fetching ideal answers... 💡"):
+                    response = llm.invoke(prompt)
                 st.write(response.content)
             else:
                 st.warning("Please provide the question.")
@@ -135,7 +137,7 @@ elif module == "Mock Interview":
     if "history" not in st.session_state:
         st.session_state.history = []
 
-    user_input = st.text_input("Your Answer (or type 'done' to finish interview):")
+    user_input = st.text_input("Write or paste your input here:")
 
     mock_interview_prompt = """
     You are acting as an interviewer for a Product Manager role. 
@@ -178,7 +180,8 @@ elif module == "Mock Interview":
 
             final_prompt = f"{mock_interview_prompt}\n\nConversation so far:\n{conversation}"
 
-            response = llm.invoke(final_prompt)
+            with st.spinner("Interviewer is thinking... 🤔"):
+                response = llm.invoke(final_prompt)
 
             # Append AI response
             st.session_state.history.append(AIMessage(content=response.content))
@@ -208,6 +211,7 @@ elif module == "Mock Interview":
         {conversation}
         """
 
-        report = llm.invoke(report_prompt)
+        with st.spinner("Generating Final Report... 📊"):
+            report = llm.invoke(report_prompt)
         st.subheader("📊 Final Evaluation Report")
         st.write(report.content)
